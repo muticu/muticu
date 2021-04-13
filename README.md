@@ -1,6 +1,6 @@
 # MuTruc
 A command-line music game that is made with C.
 
-##Todo list
+## Todo list
  - 1
  - 2
