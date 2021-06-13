@@ -1,5 +1,5 @@
 # MuTruc
-A command-line music game that is made with C.
+An open-source music game in C#.
 
 ## Todo list
 https://github.com/orgs/mutruc/projects/1
