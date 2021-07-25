@@ -1,4 +1,4 @@
-![Mutruc](https://hub.fastgit.org/mutruc/mutruc-artworks/raw/main/Banners/Banner.png)
+![Mutruc](https://github.com/mutruc/mutruc-artworks/raw/main/Banners/Banner.png)
 A fully open-sourced music game written in C#, powered by osu!framework.
 
 ## Want to know our developing progress?
