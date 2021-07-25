@@ -1,0 +1,11 @@
+﻿{
+  "solution": {
+    "path": "Mutruc.sln",
+    "projects": [
+      "Mutruc.Desktop\\Mutruc.Desktop.csproj",
+      "Mutruc.Game\\Mutruc.Game.csproj",
+      "Mutruc.Game.Tests\\Mutruc.Game.Tests.csproj",
+      "Mutruc.Resources\\Mutruc.Resources.csproj"
+    ]
+  }
+}
