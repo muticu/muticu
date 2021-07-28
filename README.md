@@ -1,5 +1,5 @@
 ![Mutruc](https://github.com/mutruc/mutruc-artworks/raw/main/Banners/Banner.png)
-A fully open-sourced music game written in C#, powered by osu!framework.
+A fully open-sourced music game written in C#, powered by osu!framework.\[[汉语](/README_zh.md)\]
 
 ## Want to know our developing progress?
 We have posted the to-do list [here](https://github.com/orgs/mutruc/projects/1).
