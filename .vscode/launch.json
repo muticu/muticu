@@ -1,75 +1,48 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [{
-            "name": "VisualTests (Debug)",
+
+    // Replace {EXECUTABLE PATH} with Godot executable path.
+    // 
+    // Example of possible paths:
+    // C:/Program Files/Godot/Godot.exe
+    // C:/Users/[user]/Downloads/Godot_v4.1-stable_mono_win64/Godot.exe
+    // /Applications/Godot_mono.app/Contents/MacOS/Godot
+    // /Users/[user]/Downloads/Godot_mono.app/Contents/MacOS/Godot
+
+    "configurations": [
+        {
+            "name": "Launch",
             "type": "coreclr",
             "request": "launch",
-            "program": "dotnet",
+            "program": "C:/Users/ellis/Desktop/Godot_v4.1.3-stable_mono_win64/Godot_v4.1.3-stable_mono_win64.exe",
+            "preLaunchTask": "build",
             "args": [
-                "${workspaceRoot}/Mutruc.Game.Tests/bin/Debug/net5.0/Mutruc.Game.Tests.dll",
+                "--path",
+                "${workspaceRoot}"
             ],
-            "cwd": "${workspaceRoot}",
-            "preLaunchTask": "Build (Tests, Debug)",
-            "linux": {
-                "env": {
-                    "LD_LIBRARY_PATH": "${workspaceRoot}/Mutruc.Game.Tests/bin/Debug/net5.0:${env:LD_LIBRARY_PATH}"
-                }
-            },
-            "console": "internalConsole"
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false
         },
         {
-            "name": "VisualTests (Release)",
+            "name": "Launch Editor",
             "type": "coreclr",
             "request": "launch",
-            "program": "dotnet",
+            "program": "C:/Users/ellis/Desktop/Godot_v4.1.3-stable_mono_win64/Godot_v4.1.3-stable_mono_win64.exe", // REPLACE
+            "preLaunchTask": "build",
             "args": [
-                "${workspaceRoot}/Mutruc.Game.Tests/bin/Release/net5.0/Mutruc.Game.Tests.dll",
+                "--path",
+                "${workspaceRoot}",
+                "--editor"
             ],
-            "cwd": "${workspaceRoot}",
-            "preLaunchTask": "Build (Tests, Release)",
-            "linux": {
-                "env": {
-                    "LD_LIBRARY_PATH": "${workspaceRoot}/Mutruc.Game.Tests/bin/Release/net5.0:${env:LD_LIBRARY_PATH}"
-                }
-            },
-            "console": "internalConsole"
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false
         },
         {
-            "name": "Mutruc (Debug)",
+            "name": "Attach to Process",
             "type": "coreclr",
-            "request": "launch",
-            "program": "dotnet",
-            "args": [
-                "${workspaceRoot}/Mutruc.Desktop/bin/Debug/net5.0/Mutruc.dll",
-            ],
-            "cwd": "${workspaceRoot}",
-            "preLaunchTask": "Build (Desktop, Debug)",
-            "linux": {
-                "env": {
-                    "LD_LIBRARY_PATH": "${workspaceRoot}/Mutruc.Desktop/bin/Debug/net5.0:${env:LD_LIBRARY_PATH}"
-                }
-            },
-            "console": "internalConsole"
-        },
-        {
-            "name": "Mutruc (Release)",
-            "type": "coreclr",
-            "request": "launch",
-            "program": "dotnet",
-            "args": [
-                "${workspaceRoot}/Mutruc.Desktop/bin/Debug/net5.0/Mutruc.dll",
-            ],
-            "cwd": "${workspaceRoot}",
-            "preLaunchTask": "Build (Desktop, Release)",
-            "linux": {
-                "env": {
-                    "LD_LIBRARY_PATH": "${workspaceRoot}/Mutruc.Desktop/bin/Debug/net5.0:${env:LD_LIBRARY_PATH}"
-                }
-            },
-            "console": "internalConsole"
+            "request": "attach"
         }
     ]
 }
