@@ -2,11 +2,14 @@ using Godot;
 using Mutruc.Base;
 using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 
 public partial class TriangleScene : Node2D
 {
 	[Export]
-	public PackedScene NoteScene;
+	public PackedScene NormalNoteScene;
+	[Export]
+	public PackedScene TriangleNoteScene;
 	public Vector2 ScreenSize; // Size of the game window.
 	private ulong initTime;
 	private Polygon2D MainTriangle;
@@ -25,17 +28,17 @@ public partial class TriangleScene : Node2D
 		this.judglabel = GetNode<Label>("JudgementLabel");
 		ScreenSize = GetViewportRect().Size;
 		Note[] A ={
-			new Note(Note.Track.Normal2, 100, false, 0),
-			new Note(Note.Track.Normal2, 1000, false, 0),
-			new Note(Note.Track.Normal2, 1500, false, 0),
-			new Note(Note.Track.Normal2, 2000, false, 0),
-			new Note(Note.Track.Normal2, 3000, false, 0),
-			new Note(Note.Track.Normal2, 4000, false, 0),
-			new Note(Note.Track.Normal2, 500, false, 0),
-			new Note(Note.Track.Normal2, 6000, false, 0),
-			new Note(Note.Track.Normal2, 7000, false, 0),
-			new Note(Note.Track.Normal2, 8000, false, 0),
-			new Note(Note.Track.Normal2, 9000, false, 0),
+			new Note(Note.Track.Special1, 100, false, 0),
+			new Note(Note.Track.Special1, 1000, false, 0),
+			new Note(Note.Track.Special1, 1500, false, 0),
+			new Note(Note.Track.Special1, 2000, false, 0),
+			new Note(Note.Track.Special1, 3000, false, 0),
+			new Note(Note.Track.Special1, 4000, false, 0),
+			new Note(Note.Track.Special1, 500, false, 0),
+			new Note(Note.Track.Special1, 6000, false, 0),
+			new Note(Note.Track.Special1, 7000, false, 0),
+			new Note(Note.Track.Special1, 8000, false, 0),
+			new Note(Note.Track.Special1, 9000, false, 0),
 			new Note(Note.Track.Normal2, 10000, false, 0),
 			new Note(Note.Track.Normal2, 11000, false, 0),
 			new Note(Note.Track.Normal2, 12000, false, 0),
@@ -86,7 +89,10 @@ public partial class TriangleScene : Node2D
 		if (@event.IsActionPressed("track_normal3"))
 		{
 			Judgement(Note.Track.Normal3);
-
+		}
+		if (@event.IsActionPressed("track_special1"))
+		{
+			Judgement(Note.Track.Special1);
 		}
 	}
 
@@ -98,12 +104,20 @@ public partial class TriangleScene : Node2D
 			case Note.Track.Normal1:
 			case Note.Track.Normal2:
 			case Note.Track.Normal3:
-				NoteNormal noteNormal = NoteScene.Instantiate<NoteNormal>();
+				NoteNormal noteNormal = NormalNoteScene.Instantiate<NoteNormal>();
 				noteNormal.note = note;
 				noteNormal.origin = ScreenSize / 2;
 				noteNormal.time = note.time + initTime + 5000;
 				noteNormal.deleteNote = this.DeleteNoteCallback;
 				_note = noteNormal;
+				break;
+			case Note.Track.Special1:
+				NoteTriangle noteTriangle = TriangleNoteScene.Instantiate<NoteTriangle>();
+				noteTriangle.note = note;
+				noteTriangle.origin = ScreenSize / 2;
+				noteTriangle.time = note.time + initTime + 5000;
+				noteTriangle.deleteNote = this.DeleteNoteCallback;
+				_note = noteTriangle;
 				break;
 			default:
 				_note = new NoteCommon();

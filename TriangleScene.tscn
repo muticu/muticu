@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://bwnwotyecacm4"]
+[gd_scene load_steps=4 format=3 uid="uid://bwnwotyecacm4"]
 
 [ext_resource type="Script" path="res://Scripts/TriangleScene.cs" id="1_ivpq0"]
 [ext_resource type="PackedScene" uid="uid://dhupnufvc16wv" path="res://NoteNormal.tscn" id="2_silld"]
+[ext_resource type="PackedScene" uid="uid://bgx76gfeg4nck" path="res://NoteTriangle.tscn" id="3_hal3j"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_ivpq0")
-NoteScene = ExtResource("2_silld")
+NormalNoteScene = ExtResource("2_silld")
+TriangleNoteScene = ExtResource("3_hal3j")
 
 [node name="MainTriangle" type="Polygon2D" parent="."]
 position = Vector2(538, 303)
