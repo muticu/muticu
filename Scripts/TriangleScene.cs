@@ -8,8 +8,13 @@ public partial class TriangleScene : Node2D
 {
 	[Export]
 	public PackedScene NormalNoteScene;
+
 	[Export]
 	public PackedScene TriangleNoteScene;
+
+	[Export]
+	public PackedScene HoldNoteScene;
+
 	public Vector2 ScreenSize; // Size of the game window.
 	private ulong initTime;
 	private Polygon2D MainTriangle;
@@ -17,17 +22,19 @@ public partial class TriangleScene : Node2D
 	private List<NoteCommon> noteCommons;
 	private int judge = 0;
 	private Label judglabel;
+	private List<NoteCommon> currentHolds;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		this.noteCommons = new();
+		this.currentHolds = new();
 		this.timer = new SpawnTimer(TimerCallback);
 		this.MainTriangle = GetNode<Polygon2D>("MainTriangle");
 		this.initTime = Time.GetTicksMsec();
 		this.judglabel = GetNode<Label>("JudgementLabel");
 		ScreenSize = GetViewportRect().Size;
-		Note[] A ={
+		Note[] A ={/*
 			new Note(Note.Track.Special1, 1000, false, 0),
 			new Note(Note.Track.Special1, 2000, false, 0),
 			new Note(Note.Track.Special1, 3000, false, 0),
@@ -37,12 +44,12 @@ public partial class TriangleScene : Node2D
 			new Note(Note.Track.Special1, 7000, false, 0),
 			new Note(Note.Track.Special1, 8000, false, 0),
 			new Note(Note.Track.Special1, 9000, false, 0),
-			new Note(Note.Track.Normal1, 10000, false, 0),
-			new Note(Note.Track.Normal2, 11000, false, 0),
-			new Note(Note.Track.Normal3, 12000, false, 0),
-			new Note(Note.Track.Normal1, 13000, false, 0),
-			new Note(Note.Track.Normal2, 14000, false, 0),
-			new Note(Note.Track.Normal3, 15000, false, 0),
+			new Note(Note.Track.Normal1, 10000, true, 1000),
+			new Note(Note.Track.Normal2, 11000, true, 1000),
+			new Note(Note.Track.Normal3, 12000, true, 1000),
+			new Note(Note.Track.Normal1, 13000, true, 1500),
+			new Note(Note.Track.Normal2, 14000, true, 1000),
+			new Note(Note.Track.Normal3, 15000, true, 1000),
 			new Note(Note.Track.Normal1, 16000, false, 0),
 			new Note(Note.Track.Normal2, 17000, false, 0),
 			new Note(Note.Track.Normal3, 18000, false, 0),
@@ -57,7 +64,10 @@ public partial class TriangleScene : Node2D
 			new Note(Note.Track.Normal3, 27000, false, 0),
 			new Note(Note.Track.Normal1, 28000, false, 0),
 			new Note(Note.Track.Normal2, 29000, false, 0),
-			new Note(Note.Track.Normal3, 30000, false, 0),
+			new Note(Note.Track.Normal3, 30000, false, 0),*/
+						new Note(Note.Track.Normal1, 1000, true, 1000),
+						new Note(Note.Track.Normal2, 3000, true, 1000),
+						new Note(Note.Track.Normal3, 5000, true, 1000),
 		};
 		timer.initNotes(A);
 		MainTriangle.Position = ScreenSize / 2 - new Vector2(35, 20.3f);
@@ -78,19 +88,31 @@ public partial class TriangleScene : Node2D
 	{
 		if (@event.IsActionPressed("track_normal1"))
 		{
-			Judgement(Note.Track.Normal1);
+			Judgement(Note.Track.Normal1, Time.GetTicksMsec());
 		}
 		if (@event.IsActionPressed("track_normal2"))
 		{
-			Judgement(Note.Track.Normal2);
+			Judgement(Note.Track.Normal2, Time.GetTicksMsec());
 		}
 		if (@event.IsActionPressed("track_normal3"))
 		{
-			Judgement(Note.Track.Normal3);
+			Judgement(Note.Track.Normal3, Time.GetTicksMsec());
+		}
+		if (@event.IsActionReleased("track_normal1"))
+		{
+			KeyReleaseJudgement(Note.Track.Normal1, Time.GetTicksMsec());
+		}
+		if (@event.IsActionReleased("track_normal2"))
+		{
+			KeyReleaseJudgement(Note.Track.Normal2, Time.GetTicksMsec());
+		}
+		if (@event.IsActionReleased("track_normal3"))
+		{
+			KeyReleaseJudgement(Note.Track.Normal3, Time.GetTicksMsec());
 		}
 		if (@event.IsActionPressed("track_special1"))
 		{
-			Judgement(Note.Track.Special1);
+			Judgement(Note.Track.Special1, Time.GetTicksMsec());
 		}
 	}
 
@@ -102,11 +124,18 @@ public partial class TriangleScene : Node2D
 			case Note.Track.Normal1:
 			case Note.Track.Normal2:
 			case Note.Track.Normal3:
-				NoteNormal noteNormal = NormalNoteScene.Instantiate<NoteNormal>();
+				NoteNormal noteNormal;
+				if (note.spec)
+				{
+					noteNormal = HoldNoteScene.Instantiate<NoteHold>();
+					(noteNormal as NoteHold).UntilEndCallback = HoldUntilEndCallback;
+				}
+				else
+					noteNormal = NormalNoteScene.Instantiate<NoteNormal>();
+				noteNormal.deleteNote = this.DeleteNoteCallback;
 				noteNormal.note = note;
 				noteNormal.origin = ScreenSize / 2;
 				noteNormal.time = note.time + initTime + 5000;
-				noteNormal.deleteNote = this.DeleteNoteCallback;
 				_note = noteNormal;
 				break;
 			case Note.Track.Special1:
@@ -125,13 +154,46 @@ public partial class TriangleScene : Node2D
 		noteCommons.Add(_note);
 	}
 
+	public void DeleteNoteCallback(NoteCommon note)
+	{
+		MakeJudgement(Judge.Levels.Miss);
+		deleteNote(note);
+
+	}
+
+	public void HoldUntilEndCallback(NoteHold note)
+	{
+		MakeJudgement(note.level);
+		currentHolds.Remove(note);
+		deleteNote(note);
+	}
 	private void MakeJudgement(Mutruc.Base.Judge.Levels level)
 	{
 		judge++;
 		judglabel.Text = $"{judge}: {level}";
 	}
 
-	private void Judgement(Note.Track track)
+	private void KeyReleaseJudgement(Note.Track track, decimal time)
+	{
+		NoteHold currentNote = null;
+		foreach (var i in currentHolds)
+		{
+			if (i.note.track == track)
+			{
+				currentNote = i as NoteHold;
+				break;
+			}
+		}
+		var delta = time - (decimal)(currentNote as NoteHold).endTime;
+		if (delta < -100)
+		{
+			currentHolds.Remove(currentNote);
+			MakeJudgement(currentNote.level == Judge.Levels.Good ? Judge.Levels.Good : currentNote.level + 1);
+			deleteNote(currentNote);
+		}
+	}
+
+	private void Judgement(Note.Track track, decimal time)
 	{
 		var delete = true;
 		NoteCommon currentNote = null;
@@ -144,7 +206,8 @@ public partial class TriangleScene : Node2D
 			}
 		}
 		if (currentNote == null) return;
-		switch (Math.Abs((decimal)Time.GetTicksMsec() - (decimal)currentNote.time))
+		var delta = Math.Abs(time - (decimal)currentNote.time);
+		switch (delta)
 		{
 			case decimal i when i > 250:
 				// Too early, do not do anything
@@ -154,29 +217,47 @@ public partial class TriangleScene : Node2D
 				MakeJudgement(Judge.Levels.Miss);
 				break;
 			case decimal i when 65 < i && i <= 100:
-				MakeJudgement(Judge.Levels.Good);
+				if (currentNote.note.spec)
+				{
+					(currentNote as NoteHold).level = Judge.Levels.Good;
+					(currentNote as NoteHold).held = true;
+					currentHolds.Add(currentNote);
+					delete = false;
+				}
+				else MakeJudgement(Judge.Levels.Good);
 				break;
 			case decimal i when 30 < i && i <= 65:
-				MakeJudgement(Judge.Levels.Great);
+				if (currentNote.note.spec)
+				{
+					(currentNote as NoteHold).level = Judge.Levels.Great;
+					(currentNote as NoteHold).held = true;
+					currentHolds.Add(currentNote);
+					delete = false;
+				}
+				else MakeJudgement(Judge.Levels.Great);
 				break;
 			case decimal i when i <= 30:
-				MakeJudgement(Judge.Levels.Perfect);
+				if (currentNote.note.spec)
+				{
+					(currentNote as NoteHold).level = Judge.Levels.Perfect;
+					(currentNote as NoteHold).held = true;
+					currentHolds.Add(currentNote);
+					delete = false;
+				}
+				else MakeJudgement(Judge.Levels.Perfect);
 				break;
 			default:
 				break;
 		}
 		if (delete && currentNote != null)
 		{
-			noteCommons.Remove(currentNote);
-			this.RemoveChild(currentNote);
-			currentNote.Free();
+			deleteNote(currentNote);
 		}
 	}
-	public void DeleteNoteCallback(NoteCommon note)
+	void deleteNote(NoteCommon note)
 	{
-		MakeJudgement(Judge.Levels.Miss);
-		noteCommons.Remove(note);
 		this.RemoveChild(note);
+		noteCommons.Remove(note);
 		note.Free();
 	}
 }

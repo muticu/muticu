@@ -8,3 +8,4 @@ script = ExtResource("1_j1vec")
 [node name="Polygon2D" type="Polygon2D" parent="."]
 offset = Vector2(-35, -20)
 polygon = PackedVector2Array(0, 0, 70, 0, 70, 20, 0, 20)
+vertex_colors = PackedColorArray(1, 1, 1, 0.501961, 1, 1, 1, 0.501961, 0.933333, 0.541176, 0.631373, 1, 0.933333, 0.541176, 0.631373, 1)
