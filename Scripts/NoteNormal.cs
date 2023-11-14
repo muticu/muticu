@@ -17,18 +17,15 @@ public partial class NoteNormal : NoteCommon
 		switch (note.track)
 		{
 			case Note.Track.Normal1:
-				this.origin -= new Vector2(35, 30.5f);
 				this.direction = Vector2.Down;
 				break;
 			case Note.Track.Normal2:
-				this.origin += new Vector2(0, 30.5f);
 				this.direction = -Vector2.FromAngle(Mathf.Pi / 6);
-				this.Rotation = -Mathf.Pi / 3;
+				this.Rotation = Mathf.Pi * 2 / 3;
 				break;
 			case Note.Track.Normal3:
-				this.origin -= new Vector2(35, 30.5f);
 				this.direction = -Vector2.FromAngle(Mathf.Pi * 5 / 6);
-				this.Rotation = Mathf.Pi / 3;
+				this.Rotation = Mathf.Pi * 4 / 3; // 240deg
 				break;
 			default:
 				this.direction = Vector2.Zero;
@@ -43,9 +40,10 @@ public partial class NoteNormal : NoteCommon
 		// speed: 500px/s
 		this.Position += direction * 500 * (float)delta;
 
-		if(Time.GetTicksMsec()>=time+100){
+		if (Time.GetTicksMsec() >= time + 100)
+		{
 			this.Hide();
 			deleteNote(this);
-		}		
+		}
 	}
 }

@@ -6,7 +6,7 @@
 script = ExtResource("1_g1sm1")
 
 [node name="Line2D" type="Line2D" parent="."]
-position = Vector2(-35, -30.5)
+position = Vector2(-35, -20.3)
 points = PackedVector2Array(0, 0, 70, 0, 51.582, 32.1, 35, 61, 0, 0)
 width = 3.0
 default_color = Color(1, 0.372549, 0.372549, 1)

@@ -13,7 +13,7 @@ public partial class TriangleScene : Node2D
 	public Vector2 ScreenSize; // Size of the game window.
 	private ulong initTime;
 	private Polygon2D MainTriangle;
-	private Mutruc.Base.SpawnTimer timer;
+	private SpawnTimer timer;
 	private List<NoteCommon> noteCommons;
 	private int judge = 0;
 	private Label judglabel;
@@ -22,47 +22,45 @@ public partial class TriangleScene : Node2D
 	public override void _Ready()
 	{
 		this.noteCommons = new();
-		this.timer = new Mutruc.Base.SpawnTimer(TimerCallback);
+		this.timer = new SpawnTimer(TimerCallback);
 		this.MainTriangle = GetNode<Polygon2D>("MainTriangle");
 		this.initTime = Time.GetTicksMsec();
 		this.judglabel = GetNode<Label>("JudgementLabel");
 		ScreenSize = GetViewportRect().Size;
 		Note[] A ={
-			new Note(Note.Track.Special1, 100, false, 0),
 			new Note(Note.Track.Special1, 1000, false, 0),
-			new Note(Note.Track.Special1, 1500, false, 0),
 			new Note(Note.Track.Special1, 2000, false, 0),
 			new Note(Note.Track.Special1, 3000, false, 0),
 			new Note(Note.Track.Special1, 4000, false, 0),
-			new Note(Note.Track.Special1, 500, false, 0),
+			new Note(Note.Track.Special1, 5000, false, 0),
 			new Note(Note.Track.Special1, 6000, false, 0),
 			new Note(Note.Track.Special1, 7000, false, 0),
 			new Note(Note.Track.Special1, 8000, false, 0),
 			new Note(Note.Track.Special1, 9000, false, 0),
-			new Note(Note.Track.Normal2, 10000, false, 0),
+			new Note(Note.Track.Normal1, 10000, false, 0),
 			new Note(Note.Track.Normal2, 11000, false, 0),
-			new Note(Note.Track.Normal2, 12000, false, 0),
-			new Note(Note.Track.Normal2, 13000, false, 0),
+			new Note(Note.Track.Normal3, 12000, false, 0),
+			new Note(Note.Track.Normal1, 13000, false, 0),
 			new Note(Note.Track.Normal2, 14000, false, 0),
-			new Note(Note.Track.Normal2, 15000, false, 0),
-			new Note(Note.Track.Normal2, 16000, false, 0),
+			new Note(Note.Track.Normal3, 15000, false, 0),
+			new Note(Note.Track.Normal1, 16000, false, 0),
 			new Note(Note.Track.Normal2, 17000, false, 0),
-			new Note(Note.Track.Normal2, 18000, false, 0),
-			new Note(Note.Track.Normal2, 19000, false, 0),
+			new Note(Note.Track.Normal3, 18000, false, 0),
+			new Note(Note.Track.Normal1, 19000, false, 0),
 			new Note(Note.Track.Normal2, 20000, false, 0),
-			new Note(Note.Track.Normal2, 21000, false, 0),
-			new Note(Note.Track.Normal2, 22000, false, 0),
+			new Note(Note.Track.Normal3, 21000, false, 0),
+			new Note(Note.Track.Normal1, 22000, false, 0),
 			new Note(Note.Track.Normal2, 23000, false, 0),
-			new Note(Note.Track.Normal2, 24000, false, 0),
-			new Note(Note.Track.Normal2, 25000, false, 0),
+			new Note(Note.Track.Normal3, 24000, false, 0),
+			new Note(Note.Track.Normal1, 25000, false, 0),
 			new Note(Note.Track.Normal2, 26000, false, 0),
-			new Note(Note.Track.Normal2, 27000, false, 0),
-			new Note(Note.Track.Normal2, 28000, false, 0),
+			new Note(Note.Track.Normal3, 27000, false, 0),
+			new Note(Note.Track.Normal1, 28000, false, 0),
 			new Note(Note.Track.Normal2, 29000, false, 0),
-			new Note(Note.Track.Normal2, 30000, false, 0),
+			new Note(Note.Track.Normal3, 30000, false, 0),
 		};
 		timer.initNotes(A);
-		MainTriangle.Position = ScreenSize / 2 - new Vector2(35, 30.5f);
+		MainTriangle.Position = ScreenSize / 2 - new Vector2(35, 20.3f);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
