@@ -22,6 +22,7 @@ public partial class TriangleScene : Node2D
 	private List<NoteCommon> noteCommons;
 	private int judge = 0;
 	private Label judglabel;
+	private Label timelbl;
 	private List<NoteCommon> currentHolds;
 
 	// Called when the node enters the scene tree for the first time.
@@ -33,6 +34,7 @@ public partial class TriangleScene : Node2D
 		this.MainTriangle = GetNode<Polygon2D>("MainTriangle");
 		this.initTime = Time.GetTicksMsec();
 		this.judglabel = GetNode<Label>("JudgementLabel");
+		this.timelbl=GetNode<Label>("timelbl");
 		ScreenSize = GetViewportRect().Size;
 		Note[] A ={/*
 			new Note(Note.Track.Special1, 1000, false, 0),
@@ -68,6 +70,9 @@ public partial class TriangleScene : Node2D
 						new Note(Note.Track.Normal1, 1000, true, 1000),
 						new Note(Note.Track.Normal2, 3000, true, 1000),
 						new Note(Note.Track.Normal3, 5000, true, 1000),
+						new Note(Note.Track.Normal1, 7000, true, 1000),
+						new Note(Note.Track.Normal2, 9000, true, 1000),
+						new Note(Note.Track.Normal3, 11000, true, 1000),
 		};
 		timer.initNotes(A);
 		MainTriangle.Position = ScreenSize / 2 - new Vector2(35, 20.3f);
@@ -77,11 +82,10 @@ public partial class TriangleScene : Node2D
 	public override void _Process(double delta)
 	{
 		var curtime = Time.GetTicksMsec() - initTime;
-		if (curtime >= 5000)
+		if (curtime >= 3000)
 		{
-			timer.UpdateTime(curtime - 5000);
+			timer.UpdateTime(curtime - 3000);
 		}
-
 	}
 
 	public override void _Input(InputEvent @event)
@@ -135,7 +139,7 @@ public partial class TriangleScene : Node2D
 				noteNormal.deleteNote = this.DeleteNoteCallback;
 				noteNormal.note = note;
 				noteNormal.origin = ScreenSize / 2;
-				noteNormal.time = note.time + initTime + 5000;
+				noteNormal.time = note.time + initTime + 3000;
 				_note = noteNormal;
 				break;
 			case Note.Track.Special1:
@@ -184,7 +188,8 @@ public partial class TriangleScene : Node2D
 				break;
 			}
 		}
-		var delta = time - (decimal)(currentNote as NoteHold).endTime;
+		if(currentNote==null) return;
+		var delta = time - currentNote.endTime;
 		if (delta < -100)
 		{
 			currentHolds.Remove(currentNote);

@@ -19,3 +19,9 @@ polygon = PackedVector2Array(0, 0, 70, 0, 35, 61)
 [node name="JudgementLabel" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="timelbl" type="Label" parent="."]
+offset_left = 369.0
+offset_top = 286.0
+offset_right = 409.0
+offset_bottom = 309.0

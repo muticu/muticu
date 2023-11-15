@@ -12,8 +12,9 @@ public partial class NoteNormal : NoteCommon
 
 	protected Vector2 direction;
 
-	protected void setPosition(){
-		
+	protected void setPosition()
+	{
+
 		switch (note.track)
 		{
 			case Note.Track.Normal1:
@@ -41,8 +42,9 @@ public partial class NoteNormal : NoteCommon
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		// speed: 400px/s
-		this.Position += direction * 400 * (float)delta;
+
+		// speed: 379.7px/s
+		this.Position += direction * 385f * (float)delta;
 
 		if (Time.GetTicksMsec() >= time + 100)
 		{
