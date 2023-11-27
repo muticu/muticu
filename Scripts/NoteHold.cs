@@ -7,7 +7,7 @@ public partial class NoteHold : NoteNormal
 	private Line2D tailLine;
 	private Polygon2D headPolygon;
 	public bool held;
-	public Mutruc.Base.Judge.Levels level;
+	public Muticu.Base.Judge.Levels level;
 	public delegate void _untilEndCallback(NoteHold @this);
 	public _untilEndCallback UntilEndCallback;
 	// Called when the node enters the scene tree for the first time.

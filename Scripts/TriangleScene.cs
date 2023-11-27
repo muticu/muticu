@@ -1,5 +1,5 @@
 using Godot;
-using Mutruc.Base;
+using Muticu.Base;
 using System;
 using System.Collections.Generic;
 using System.Security.Principal;
@@ -15,9 +15,10 @@ public partial class TriangleScene : Node2D
 	[Export]
 	public PackedScene HoldNoteScene;
 
-	public Vector2 ScreenSize; // Size of the game window.
+	public Vector2 ScreenCenter;
 	private ulong initTime;
-	private Polygon2D MainTriangle;
+	private Node2D MainTriangle;
+	private Node2D Catcher;
 	private SpawnTimer timer;
 	private List<NoteCommon> noteCommons;
 	private int judge = 0;
@@ -31,11 +32,12 @@ public partial class TriangleScene : Node2D
 		this.noteCommons = new();
 		this.currentHolds = new();
 		this.timer = new SpawnTimer(TimerCallback);
-		this.MainTriangle = GetNode<Polygon2D>("MainTriangle");
+		this.MainTriangle = GetNode<Node2D>("MainTriangle");
+		this.Catcher=GetNode<Node2D>("Catcher");
 		this.initTime = Time.GetTicksMsec();
 		this.judglabel = GetNode<Label>("JudgementLabel");
 		this.timelbl=GetNode<Label>("timelbl");
-		ScreenSize = GetViewportRect().Size;
+		ScreenCenter=GetViewportRect().Size/2;
 		Note[] A ={/*
 			new Note(Note.Track.Special1, 1000, false, 0),
 			new Note(Note.Track.Special1, 2000, false, 0),
@@ -75,7 +77,7 @@ public partial class TriangleScene : Node2D
 						new Note(Note.Track.Normal3, 11000, true, 1000),
 		};
 		timer.initNotes(A);
-		MainTriangle.Position = ScreenSize / 2 - new Vector2(35, 20.3f);
+		MainTriangle.Position = ScreenCenter; /* - new Vector2(35, 20.3f);*/
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -86,6 +88,8 @@ public partial class TriangleScene : Node2D
 		{
 			timer.UpdateTime(curtime - 3000);
 		}
+		Catcher.Rotation=(GetViewport().GetMousePosition()-ScreenCenter).Angle();
+		
 	}
 
 	public override void _Input(InputEvent @event)
@@ -120,7 +124,7 @@ public partial class TriangleScene : Node2D
 		}
 	}
 
-	public void TimerCallback(Mutruc.Base.Note note)
+	public void TimerCallback(Muticu.Base.Note note)
 	{
 		NoteCommon _note;
 		switch (note.track)
@@ -138,14 +142,14 @@ public partial class TriangleScene : Node2D
 					noteNormal = NormalNoteScene.Instantiate<NoteNormal>();
 				noteNormal.deleteNote = this.DeleteNoteCallback;
 				noteNormal.note = note;
-				noteNormal.origin = ScreenSize / 2;
+				noteNormal.origin = ScreenCenter;
 				noteNormal.time = note.time + initTime + 3000;
 				_note = noteNormal;
 				break;
 			case Note.Track.Special1:
 				NoteTriangle noteTriangle = TriangleNoteScene.Instantiate<NoteTriangle>();
 				noteTriangle.note = note;
-				noteTriangle.origin = ScreenSize / 2;
+				noteTriangle.origin = ScreenCenter;
 				noteTriangle.time = note.time + initTime + 5000;
 				noteTriangle.deleteNote = this.DeleteNoteCallback;
 				_note = noteTriangle;
@@ -171,7 +175,7 @@ public partial class TriangleScene : Node2D
 		currentHolds.Remove(note);
 		deleteNote(note);
 	}
-	private void MakeJudgement(Mutruc.Base.Judge.Levels level)
+	private void MakeJudgement(Muticu.Base.Judge.Levels level)
 	{
 		judge++;
 		judglabel.Text = $"{judge}: {level}";

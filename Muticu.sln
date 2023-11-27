@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mutruc", "Mutruc.csproj", "{6DE3F728-27D0-4C99-98F3-4858EAC6E54E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Muticu", "Muticu.csproj", "{6DE3F728-27D0-4C99-98F3-4858EAC6E54E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

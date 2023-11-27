@@ -1,5 +1,5 @@
 using Godot;
-using Mutruc.Base;
+using Muticu.Base;
 using System;
 using System.Collections;
 

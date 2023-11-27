@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bxxck008lbbpl"]
+
+[node name="Catcher" type="Node2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(140, 35)
+rotation = -1.5708
+polygon = PackedVector2Array(0, 0, 70, 0, 70, 10, 35, 5, 0, 10)

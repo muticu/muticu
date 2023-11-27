@@ -1,4 +1,4 @@
-namespace Mutruc.Base;
+namespace Muticu.Base;
 
 using System;
 using System.Linq;

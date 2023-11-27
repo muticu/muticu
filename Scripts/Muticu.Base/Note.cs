@@ -1,6 +1,6 @@
 using System;
 
-namespace Mutruc.Base;
+namespace Muticu.Base;
 
 public class Note : IComparable
 {

@@ -1,4 +1,4 @@
-namespace Mutruc.Base;
+namespace Muticu.Base;
 
 public class Judge{
     public enum Levels{
