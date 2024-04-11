@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://bwnwotyecacm4"]
 
 [ext_resource type="Script" path="res://Scripts/TriangleScene.cs" id="1_ivpq0"]
-[ext_resource type="PackedScene" uid="uid://dhupnufvc16wv" path="res://NoteNormal.tscn" id="2_silld"]
-[ext_resource type="PackedScene" uid="uid://bgx76gfeg4nck" path="res://NoteTriangle.tscn" id="3_hal3j"]
-[ext_resource type="PackedScene" uid="uid://22y3i7kbd66f" path="res://NoteHold.tscn" id="4_4s4xk"]
-[ext_resource type="PackedScene" uid="uid://bxxck008lbbpl" path="res://Catcher.tscn" id="5_0dut2"]
+[ext_resource type="PackedScene" uid="uid://dhupnufvc16wv" path="res://Components/NoteNormal.tscn" id="2_silld"]
+[ext_resource type="PackedScene" uid="uid://bgx76gfeg4nck" path="res://Components/NoteTriangle.tscn" id="3_hal3j"]
+[ext_resource type="PackedScene" uid="uid://22y3i7kbd66f" path="res://Components/NoteHold.tscn" id="4_4s4xk"]
+[ext_resource type="PackedScene" uid="uid://bxxck008lbbpl" path="res://Components/Catcher.tscn" id="5_0dut2"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_ivpq0")
