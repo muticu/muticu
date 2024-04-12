@@ -1,3 +1,5 @@
+namespace Muticu;
+
 using Godot;
 using Muticu.Base;
 using System;

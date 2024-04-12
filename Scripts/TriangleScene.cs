@@ -1,3 +1,5 @@
+namespace Muticu;
+
 using Godot;
 using Muticu.Base;
 using System;
@@ -14,6 +16,9 @@ public partial class TriangleScene : Node2D
 
 	[Export]
 	public PackedScene HoldNoteScene;
+
+	[Export]
+	public PackedScene CatchNoteScene;
 
 	public Vector2 ScreenCenter;
 	private ulong initTime;
@@ -69,13 +74,20 @@ public partial class TriangleScene : Node2D
 			new Note(Note.Track.Normal1, 28000, false, 0),
 			new Note(Note.Track.Normal2, 29000, false, 0),
 			new Note(Note.Track.Normal3, 30000, false, 0),*/
+			/*
 						new Note(Note.Track.Normal1, 1000, true, 1000),
 						new Note(Note.Track.Normal2, 3000, true, 1000),
 						new Note(Note.Track.Normal3, 5000, true, 1000),
 						new Note(Note.Track.Normal1, 7000, true, 1000),
 						new Note(Note.Track.Normal2, 9000, true, 1000),
-						new Note(Note.Track.Normal3, 11000, true, 1000),
-		};
+						new Note(Note.Track.Normal3, 11000, true, 1000),*/
+			new Note(Note.Track.Special2, 1000, false, 0),
+            new Note(Note.Track.Special2, 2000, false, 10472),
+            new Note(Note.Track.Special2, 3000, false, 20943),
+            new Note(Note.Track.Special2, 4000, false, 10472),
+            new Note(Note.Track.Special2, 5000, false, 5325),
+            new Note(Note.Track.Normal2, 6000, false, 0),
+        };
 		timer.initNotes(A);
 		MainTriangle.Position = ScreenCenter; /* - new Vector2(35, 20.3f);*/
 	}
@@ -124,7 +136,7 @@ public partial class TriangleScene : Node2D
 		}
 	}
 
-	public void TimerCallback(Muticu.Base.Note note)
+	public void TimerCallback(Note note)
 	{
 		NoteCommon _note;
 		switch (note.track)
@@ -138,8 +150,7 @@ public partial class TriangleScene : Node2D
 					noteNormal = HoldNoteScene.Instantiate<NoteHold>();
 					(noteNormal as NoteHold).UntilEndCallback = HoldUntilEndCallback;
 				}
-				else
-					noteNormal = NormalNoteScene.Instantiate<NoteNormal>();
+				else noteNormal = NormalNoteScene.Instantiate<NoteNormal>();
 				noteNormal.deleteNote = this.DeleteNoteCallback;
 				noteNormal.note = note;
 				noteNormal.origin = ScreenCenter;
@@ -154,7 +165,15 @@ public partial class TriangleScene : Node2D
 				noteTriangle.deleteNote = this.DeleteNoteCallback;
 				_note = noteTriangle;
 				break;
-			default:
+			case Note.Track.Special2:
+				NoteCatch noteCatch = CatchNoteScene.Instantiate<NoteCatch>();
+				noteCatch.note = note;
+				noteCatch.origin = ScreenCenter;
+                noteCatch.time = note.time + initTime + 5000;
+				noteCatch.deleteNote = this.DeleteNoteCallback;
+				_note = noteCatch;
+				break;
+            default:
 				_note = new NoteCommon();
 				break;
 		}
@@ -166,7 +185,6 @@ public partial class TriangleScene : Node2D
 	{
 		MakeJudgement(Judge.Levels.Miss);
 		deleteNote(note);
-
 	}
 
 	public void HoldUntilEndCallback(NoteHold note)
@@ -175,6 +193,7 @@ public partial class TriangleScene : Node2D
 		currentHolds.Remove(note);
 		deleteNote(note);
 	}
+
 	private void MakeJudgement(Muticu.Base.Judge.Levels level)
 	{
 		judge++;
@@ -263,6 +282,7 @@ public partial class TriangleScene : Node2D
 			deleteNote(currentNote);
 		}
 	}
+
 	void deleteNote(NoteCommon note)
 	{
 		this.RemoveChild(note);

@@ -43,7 +43,7 @@ public class Note : IComparable
     public bool spec;
     /// <summary>
     /// for sliders, this represents the length (in miliseconds)
-    /// for Special2 notes, this represents the bias angle
+    /// for Special2 notes, this represents the bias angle (10000 times radian)
     /// </summary>
     public int param;
 

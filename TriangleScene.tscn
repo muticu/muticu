@@ -1,16 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://bwnwotyecacm4"]
+[gd_scene load_steps=7 format=3 uid="uid://bwnwotyecacm4"]
 
 [ext_resource type="Script" path="res://Scripts/TriangleScene.cs" id="1_ivpq0"]
 [ext_resource type="PackedScene" uid="uid://dhupnufvc16wv" path="res://Components/NoteNormal.tscn" id="2_silld"]
 [ext_resource type="PackedScene" uid="uid://bgx76gfeg4nck" path="res://Components/NoteTriangle.tscn" id="3_hal3j"]
 [ext_resource type="PackedScene" uid="uid://22y3i7kbd66f" path="res://Components/NoteHold.tscn" id="4_4s4xk"]
 [ext_resource type="PackedScene" uid="uid://bxxck008lbbpl" path="res://Components/Catcher.tscn" id="5_0dut2"]
+[ext_resource type="PackedScene" uid="uid://qpm48bhdwyjo" path="res://Components/NoteCatch.tscn" id="5_dx02k"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_ivpq0")
 NormalNoteScene = ExtResource("2_silld")
 TriangleNoteScene = ExtResource("3_hal3j")
 HoldNoteScene = ExtResource("4_4s4xk")
+CatchNoteScene = ExtResource("5_dx02k")
 
 [node name="MainTriangle" type="Node2D" parent="."]
 position = Vector2(576, 324)
@@ -23,12 +25,14 @@ polygon = PackedVector2Array(0, 0, 70, 0, 35, 61)
 [node name="JudgementLabel" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+metadata/_edit_use_anchors_ = true
 
 [node name="timelbl" type="Label" parent="."]
 offset_left = 369.0
 offset_top = 286.0
 offset_right = 409.0
 offset_bottom = 309.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Catcher" parent="." instance=ExtResource("5_0dut2")]
 position = Vector2(576, 324)

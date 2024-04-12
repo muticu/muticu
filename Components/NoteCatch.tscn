@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://qpm48bhdwyjo"]
+
+[ext_resource type="Script" path="res://Scripts/NoteCatch.cs" id="1_uxgv0"]
+
+[node name="NoteCatch" type="Node2D"]
+script = ExtResource("1_uxgv0")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-10, -10, -10, 10, 10, 10, 10, -10)
