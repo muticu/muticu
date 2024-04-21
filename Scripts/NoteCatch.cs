@@ -15,7 +15,7 @@ public partial class NoteCatch : NoteCommon
     protected void setPosition()
     {
         this.direction = Vector2.FromAngle(this.note.param/10000f);
-        this.Rotation = (this.note.param / 10000f);
+        this.Rotation = (this.note.param / 10000f) - Mathf.Pi/2;
         this.Position = origin - (direction * 400);
     }
     // Called when the node enters the scene tree for the first time.

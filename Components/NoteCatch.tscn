@@ -6,4 +6,7 @@
 script = ExtResource("1_uxgv0")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(0, -10)
+color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(-10, -10, -10, 10, 10, 10, 10, -10)
+vertex_colors = PackedColorArray(1, 1, 1, 0, 0.662745, 0.462745, 0.584314, 1, 0.427451, 0.529412, 0.772549, 1, 1, 1, 1, 0)

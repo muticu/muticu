@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bxxck008lbbpl"]
 
-[ext_resource type="Texture2D" uid="uid://7nbwa04llsc7" path="res://assets/CatchCircle.svg" id="1_hb1yl"]
+[ext_resource type="Texture2D" uid="uid://c7awifw8jm5hh" path="res://assets/CatchCircle.svg" id="1_hb1yl"]
 
 [node name="Catcher" type="Node2D"]
 
